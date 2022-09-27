@@ -11,13 +11,16 @@ const SimpleInput = (props) => {
     InputBlurHandler: nameBlurHandler,
     reset: resetNameInput,
   } = useInput((value) => value.trim() !== "");
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [entereEmailTouched, setEnteredEmailTouched] = useState(false);
-
-  const enteredEmailIsValid = enteredEmail.match(
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: enteredEmailInvalid,
+    valueChangeHandler: emailInputChangeHandler,
+    InputBlurHandler: emailInputBlurHandler,
+    reset: resetEmailInput,
+  } = useInput((value) =>
+    value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
   );
-  const enteredEmailInvalid = !enteredEmailIsValid && entereEmailTouched;
 
   let formIsValid = false;
 
@@ -25,9 +28,6 @@ const SimpleInput = (props) => {
     formIsValid = true;
   }
 
-  const emailInputChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
   const formSubmitionHandler = (event) => {
     event.preventDefault();
     if (!enteredNameIsValid || enteredEmailInvalid) {
@@ -36,18 +36,13 @@ const SimpleInput = (props) => {
 
     console.log(enteredName, enteredEmail);
     resetNameInput();
-    setEnteredEmail("");
-    setEnteredEmailTouched(false);
+    resetEmailInput();
   };
 
-  const emailInputBlurHandler = (event) => {
-    setEnteredEmailTouched(true);
-    console.log(enteredName);
-  };
   const nameInputClasses = nameInputHasError
     ? "form-control invalid"
     : "form-control";
-  const emailInputClasses = enteredEmailIsValid
+  const emailInputClasses = enteredEmailInvalid
     ? "form-control invalid"
     : "form-control";
   return (
