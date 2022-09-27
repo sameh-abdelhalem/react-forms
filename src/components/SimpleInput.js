@@ -1,6 +1,4 @@
-import { computeHeadingLevel } from "@testing-library/react";
-import { useState } from "react";
-import useInput from "../hooks/use-imput";
+import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
   const {
