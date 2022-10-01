@@ -52,6 +52,9 @@ const BasicForm = (props) => {
   }
 
   const formSubmitionHandler = (event) => {
+    if (!formIsValid) {
+      return;
+    }
     event.preventDefault();
 
     console.log(enteredFirstName, enteredEmail, enteredLastName);
